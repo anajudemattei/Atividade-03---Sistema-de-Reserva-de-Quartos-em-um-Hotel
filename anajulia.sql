@@ -77,3 +77,33 @@ JOIN
 WHERE
     r.data_entrada BETWEEN '2024-12-30' AND '2025-01-02';
 
+INSERT INTO hospedes (nome, email, data_nascimento) 
+VALUES
+('Lucca Demattei', 'lucca@gmail.com', '2024-10-31'),
+('Ana Julia', 'naju237@gmail.com', '2008-04-26');
+
+INSERT INTO quartos (andar, numero_quarto, disponivel)
+VALUES
+(65, 708, NULL),
+(78, 909, NULL);
+
+INSERT INTO reservas (data_entrada, data_saida, horario_reserva, id_hospede, id_quarto) VALUES
+('2024-11-04', '2024-11-07', '10:00', 1, 4), 
+('2024-11-04', '2024-11-07', '10:10', 2, 5);
+
+
+ALTER TABLE quartos ALTER COLUMN disponivel DROP NOT NULL;
+
+
+SELECT 
+    h.nome AS hospedes,
+    q.numero_quarto AS quarto,
+    q.disponivel
+FROM 
+    reservas r
+JOIN 
+    hospedes h ON r.id_hospede = h.id_hospede
+JOIN 
+    quartos q ON r.id_quarto = q.id_quarto
+WHERE
+    q.disponivel IS TRUE;
